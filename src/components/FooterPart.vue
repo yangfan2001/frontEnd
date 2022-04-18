@@ -1,10 +1,12 @@
 <template>
-$END$
+<a-layout-footer class="footer">
+
+</a-layout-footer>
 </template>
 
 <script>
 export default {
-name: "FooterPart"
+  name: "FooterPart"
 }
 </script>
 

@@ -14,8 +14,6 @@
           name="basic"
           :wrapper-col="{ offset:3,span: 18 }"
           autocomplete="off"
-          @finish="onFinish"
-          @finishFailed="onFinishFailed"
           class="LoginForm"
       >
         <a-form-item
@@ -51,7 +49,7 @@
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 3, span: 18 }">
-          <a-button :disabled="disabled" type="primary" html-type="submit" block>
+          <a-button :disabled="disabled" type="primary" @click="submitForm" block>
             提交
           </a-button>
         </a-form-item>
@@ -69,8 +67,8 @@ import { reactive,computed,ref,inject} from 'vue';
 import {LockOutlined,UserOutlined,InfoCircleOutlined} from '@ant-design/icons-vue';
 import {useRouter} from "vue-router";
 import {useStore} from 'vuex'
-import {message} from 'ant-design-vue';
 import md5 from 'js-md5'
+import {message} from 'ant-design-vue';
 
 export default ({
   name:"LoginCard",
@@ -88,6 +86,7 @@ export default ({
         tab:'注册'
       }
     ]
+
     const key = ref('login')
     const router = useRouter() // the use of vueRouter
     const store = useStore() // the use of vueX
@@ -115,15 +114,16 @@ export default ({
       }
     }
 
-    const onFinish = values => {
-      console.log('Success:', values);
-      // 传输数据
+    // 定义表单提交的事件响应
+    const submitForm=(event)=>{
+      event.preventDefault()
       let toParams = {
-        username: values.username.toString(),
-        password: md5(values.password).toUpperCase()
+        username: formState.username.toString(),
+        password: md5(formState.password).toUpperCase()
       }
       console.log(toParams)
       // 利用axios对后端发送post请求
+      console.log(store.state.backend_url)
       let url = store.state.backend_url+'/login'
       axios.post(url,toParams)
           .then((response) => {
@@ -135,27 +135,23 @@ export default ({
             message.success('登陆成功！')
             //这里考虑加一个定时器
             console.log(router);
-            //
+            //跳转到新的页面
             router.push('/')
           })
           .catch((error) => {
             message.error('用户名或密码错误!')
             console.log('登陆失败',error);
           })
-    };
 
-    const onFinishFailed = () => {
-      message.error('连接错误!!!')
-    };
+    }
 
     return {
       formState,
-      onFinish,
-      onFinishFailed,
       disabled,
       tabList,
       key,
-      onTabChange
+      onTabChange,
+      submitForm
     };
   },
 
