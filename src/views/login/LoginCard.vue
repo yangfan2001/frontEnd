@@ -18,9 +18,9 @@
       >
         <a-form-item
             name="username"
-            :rules="[{ required: true, message: '请输入用户名!',trigger:'blur' }]"
+            :rules="[{ required: true, message: '请输入手机号码!',trigger:'blur' }]"
         >
-          <a-input v-model:value="formState.username" placeholder="请输入用户名">
+          <a-input v-model:value="formState.username" placeholder="请输入手机号码">
             <template #prefix>
               <user-outlined type="user" />
             </template>
@@ -54,8 +54,8 @@
           </a-button>
         </a-form-item>
 
-        <a-form-item :wrapper-col="{ offset: 9, span: 6 }" >
-          <a href="#/forget" style="margin: auto;">忘记密码</a>
+        <a-form-item :wrapper-col="{ offset: 9, span: 6 }" style="text-align: center">
+          <a href="#/forget">忘记密码</a>
         </a-form-item>
       </a-form>
     </a-card>
@@ -125,7 +125,12 @@ export default ({
       // 利用axios对后端发送post请求
       console.log(store.state.backend_url)
       let url = store.state.backend_url+'/login'
-      axios.post(url,toParams)
+
+      axios({
+        method:'Post',
+        url:url,
+        auth:toParams
+      })
           .then((response) => {
             console.log(response)
             // 设置网页的cookies
@@ -164,10 +169,10 @@ export default ({
   width: 50%;
 }
 .Card{
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255,255,255,0.9);
   margin: auto;
-  width: 300px;
-  height: 400px;
+  width: 360px;
+  height: 420px;
   border-radius:40px;
 }
 </style>

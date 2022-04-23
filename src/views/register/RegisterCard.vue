@@ -70,10 +70,19 @@
             name="email"
             :rules="[{ required: true, message: '请输入邮箱!' ,trigger:'blur'}]"
         >
-          <a-input v-model:value="formState.email" placeholder="请输入邮箱">
+          <a-input v-model:value="formState.email"
+                   :options="emailOptions" placeholder="请输入邮箱"
+                           @search="handleSearch">
+
             <template #prefix>
               <MailOutlined class="site-form-item-icon" />
             </template>
+
+            <template #option="{ value: val }">
+              {{ val.split('@')[0] }} @
+              <span style="font-weight: bold">{{ val.split('@')[1] }}</span>
+            </template>
+
           </a-input>
 
         </a-form-item>
@@ -168,6 +177,20 @@ export default {
       validationDisabled:true,
       timer:null
     })
+    // 定义email提示的选项options
+    const emailOptions = ref([]);
+
+    const handleSearch = val => {
+      let res;
+      if (!val || val.indexOf('@') >= 0) {
+        res = [];
+      } else {
+        res = ['gmail.com', '163.com', 'qq.com'].map(domain => ({
+          value: `${val}@${domain}`,
+        }));
+      }
+      emailOptions.value = res;
+    };
 
     //定义外部引入的组件
     const router = useRouter() // the use of vueRouter
@@ -214,8 +237,11 @@ export default {
       console.log(send)
       let url = store.state.backend_url+'/sendCode'
       console.log(axios,url)
-      /*
-      axios.post(url,send)
+
+      axios.post(url,{
+        code:send.verifyCode,
+        telephone:send.phoneNumber
+      })
           .then((response)=>{
             if(response.status !== 200)
             {
@@ -232,7 +258,7 @@ export default {
             message.error('验证码发送失败！')
             return //验证码发送失败直接return
           })
-       */
+
 
       // 验证码已经发送完成
       const TIME_COUNT = 60;
@@ -294,10 +320,11 @@ export default {
       let toParams = {
         username: formState.username.toString(),
         phoneNumber: formState.phoneNumber.toString(),
-        verifycode: send.verifyCode.toString(),
+        email: formState.email.toString(),
         password: md5(formState.password).toUpperCase()
       }
-      if(toParams.verifycode!==formState.verifyCode)
+
+      if(send.verifyCode!==formState.verifyCode)
       {//输入的验证码不同
         message.error('验证码输入错误')
         return
@@ -329,7 +356,9 @@ export default {
       getVerifyCode,
       submitForm,
       data,
-      verifyCodeButtonMsg
+      verifyCodeButtonMsg,
+      emailOptions,
+      handleSearch
     }
   }
 }
@@ -341,10 +370,10 @@ export default {
   width: 100%;
 }
 .Card{
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255,255,255,0.9);
   margin: auto;
   border-radius:50px;
-  width: 400px;
+  width: 360px;
   height: 550px
 }
 </style>

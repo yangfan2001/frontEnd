@@ -160,8 +160,11 @@ export default ({
       console.log(send)
       let url = store.state.backend_url+'/sendCode'
       console.log(axios,url)
-      /*
-      axios.post(url,send)
+
+      axios.post(url,{
+        code:send.verifyCode,
+        telephone:send.phoneNumber
+      })
           .then((response)=>{
             if(response.status !== 200)
             {
@@ -178,7 +181,7 @@ export default ({
             message.error('验证码发送失败！')
             return //验证码发送失败直接return
           })
-       */
+
 
       // 验证码已经发送完成
       const TIME_COUNT = 60;
@@ -217,16 +220,15 @@ export default ({
       // now start access and check the data from the back-end
       let toParams = {
         phoneNumber: formState.phoneNumber.toString(),
-        verifycode: send.verifyCode.toString(),
         password: md5(formState.newPassword).toUpperCase()
       }
-      if(toParams.verifycode!==formState.verifyCode)
+      if(send.verifyCode.toString()!==formState.verifyCode)
       {//输入的验证码不同
         message.error('验证码输入错误')
         return
       }
 
-      let url = store.state.backend_url+'/forgetPassword'
+      let url = store.state.backend_url+'/changePwd'
       axios.post(url,toParams)
           .then((response)=>{
             let hasTel = response.data['hasTel'];
@@ -269,9 +271,9 @@ export default ({
   width: 50%;
 }
 .Card{
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255,255,255,0.9);
   margin: auto;
-  width: 400px;
+  width: 360px;
   height: 400px;
   border-radius:40px;
 }
