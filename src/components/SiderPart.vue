@@ -10,46 +10,40 @@
         <template #title>
               <span>
                 <user-outlined />
-                subnav 1
+                个人
               </span>
         </template>
-        <a-menu-item key="1">option1</a-menu-item>
-        <a-menu-item key="2">option2</a-menu-item>
-        <a-menu-item key="3">option3</a-menu-item>
-        <a-menu-item key="4">option4</a-menu-item>
+        <a-menu-item key="1">我的主页</a-menu-item>
+        <a-menu-item key="2">我的项目</a-menu-item>
+        <a-menu-item key="3">我的任务</a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="sub2">
         <template #title>
               <span>
                 <laptop-outlined />
-                subnav 2
+                项目
               </span>
         </template>
-        <a-menu-item key="5">option5</a-menu-item>
-        <a-menu-item key="6">option6</a-menu-item>
-        <a-menu-item key="7">option7</a-menu-item>
-        <a-menu-item key="8">option8</a-menu-item>
+        <a-menu-item key="5">项目管理</a-menu-item>
+        <a-menu-item key="6">项目搜索</a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="sub3">
         <template #title>
               <span>
                 <notification-outlined />
-                subnav 3
+                通知
               </span>
         </template>
-        <a-menu-item key="9">option9</a-menu-item>
-        <a-menu-item key="10">option10</a-menu-item>
-        <a-menu-item key="11">option11</a-menu-item>
-        <a-menu-item key="12">option12</a-menu-item>
+        <a-menu-item key="9">查看通知</a-menu-item>
+        <a-menu-item key="10">发送通知</a-menu-item>
       </a-sub-menu>
     </a-menu>
   </a-layout-sider>
 </template>
 
-<script>
-export default {
-  name: "SiderPart"
-}
+<script setup>
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue'
+
 </script>
 
 <style scoped>

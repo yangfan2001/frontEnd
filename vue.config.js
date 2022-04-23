@@ -2,7 +2,8 @@ const Timestamp = new Date().getTime();
 
 module.exports = {
   devServer:{
-    proxy:'http://localhost:5050/'
+    //proxy:'http://localhost:5051/',
+    port: 3000
   },
   configureWebpack: {
     //每次打包后生成的js携带时间戳

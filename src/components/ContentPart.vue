@@ -1,13 +1,13 @@
 <template>
 <a-layout-content class="content">
-  123
+  <div style="margin-top: 200px;">
+    <a-empty />
+  </div>
 </a-layout-content>
 </template>
 
-<script>
-export default {
-  name: "ContentPart"
-}
+<script setup>
+
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import RegisterCard from "@/components/RegisterCard";
+import RegisterCard from "./RegisterCard";
 export default {
   name: "RegisterPage",
   components:{RegisterCard}

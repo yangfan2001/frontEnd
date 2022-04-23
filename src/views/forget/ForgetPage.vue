@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ForgetCard from "@/components/ForgetCard";
+import ForgetCard from "./ForgetCard";
 export default {
   name: "ForgetPage",
   components:{ForgetCard}

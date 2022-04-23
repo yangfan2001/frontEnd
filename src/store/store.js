@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 // root state object.
 // each Vuex instance is just a single state tree.
 const state = {
-    backend_url:''     // http://localhost:5050/'
+    backend_url:'http://localhost:5051'
 }
 
 // mutations are operations that actually mutate the state.

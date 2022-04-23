@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import LoginCard from "@/components/LoginCard";
+import LoginCard from "./LoginCard";
 export default {
   name: "LoginPage",
   components:{LoginCard}

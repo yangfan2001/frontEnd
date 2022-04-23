@@ -1,23 +1,63 @@
 <template>
-  <div class="logo" />
-  <a-menu
-      v-model:selectedKeys="selectedKeys1"
-      theme="dark"
-      mode="horizontal"
-      :style="{ lineHeight: '64px' }"
-  >
-    <a-menu-item key="1">nav 1</a-menu-item>
-    <a-menu-item key="2">nav 2</a-menu-item>
-    <a-menu-item key="3">nav 3</a-menu-item>
-  </a-menu>
+  <a-layout-header class="header">
+
+    <div class="header-left">
+      <h1 style="color: snow">欢迎,{{userName}}</h1>
+    </div>
+
+    <div class="header-right">
+      <a-dropdown>
+        <span class="header-right-item">
+          <a-avatar src="https://joeschmoe.io/api/v1/random" style="background-color:aliceblue">
+          </a-avatar>
+        </span>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item @click="LogOut">
+              登出
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </div>
+
+
+  </a-layout-header>
 </template>
 
-<script>
-export default {
-  name: "HeaderPart"
+<script setup>
+
+import {inject} from 'vue'
+import {useRouter} from "vue-router";
+
+const cookies = inject('cookies')
+const router = useRouter()
+
+const LogOut = ()=>{
+  cookies.remove('user');
+  cookies.remove('token');
+  router.push('/login')
 }
+const userName = cookies.get('user')
+
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.header{
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
 
+  .header-right{
+    margin-right: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  .header-left{
+    margin-left: 50px;
+  }
+}
 </style>
